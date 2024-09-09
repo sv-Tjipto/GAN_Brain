@@ -1,0 +1,1 @@
+# For compiling the GAN model and managing the training.
