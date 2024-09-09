@@ -2,7 +2,7 @@
 
 import torch
 from torchvision import datasets, transforms
-from torch.utils.data import Dataset
+from torch.utils.data import DataLoader,Dataset
 import os
 from PIL import Image
 
@@ -71,3 +71,5 @@ def load_data(batch_size):
     image_dir = "/Volumes/sv_QuickFix/COMP3710/Assignment_2/GAN_Brain/Data_Brain"  # Path to OASIS dataset slices
     dataset = OASISDataset(TRAIN_IMG,VAL_IMG,TEST_IMG, transform=transform)
     dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+
+    return dataloader
