@@ -9,12 +9,14 @@ import matplotlib.pyplot as plt
 import torch.optim as optim
 from torchvision.utils import make_grid
 from tqdm import tqdm # For displaying progress bar
+import os
 
 TRAIN = True
 EPOCH_VISUALIZATION = True
 TEST = False
 LOAD_CHECKPOINT = False
 CHECKPOINT_PATH = 'checkpoint/checkpoint.pth'
+CHECKPOINT_DIR = 'checkpoints'
 
 def devicer():
     # Prioritize CUDA, then MPS, and finally CPU
@@ -66,7 +68,7 @@ def load_checkpoint(checkpoint_path, generator, discriminator, gen_optimizer, di
     return start_epoch
 
 
-def train1(generator, discriminator, adversarial_loss,optimizer_G, optimizer_D, dataloader, latent_dim, epochs, epoch, batch_size):
+# def train1(generator, discriminator, adversarial_loss,optimizer_G, optimizer_D, dataloader, latent_dim, epochs, epoch, batch_size):
     
     # Initialize tqdm progress bar
     progress_bar = tqdm(dataloader, total=len(dataloader), desc=f"Epoch {epoch+1}/{epochs}")
@@ -127,6 +129,21 @@ def train1(generator, discriminator, adversarial_loss,optimizer_G, optimizer_D, 
             plt.imshow(grid.permute(1, 2, 0), cmap="gray")
             plt.show()
 
+def save_checkpoint(generator, discriminator, gen_optimizer, disc_optimizer, epoch, checkpoint_dir=CHECKPOINT_DIR):
+    if not os.path.exists(checkpoint_dir):
+        os.makedirs(checkpoint_dir)
+    
+    checkpoint = {
+        'epoch': epoch,
+        'generator_state_dict': generator.state_dict(),
+        'discriminator_state_dict': discriminator.state_dict(),
+        'gen_optimizer_state_dict': gen_optimizer.state_dict(),
+        'disc_optimizer_state_dict': disc_optimizer.state_dict(),
+    }
+    
+    torch.save(checkpoint, f"{checkpoint_dir}/gan_brain_checkpoint_epoch.pth")
+    print(f"Checkpoint saved at epoch {epoch}.", flush =True)
+
 def train(generator, discriminator, adversarial_loss, optimizer_G, optimizer_D, dataloader, latent_dim, epochs, epoch, batch_size, device, visualize=False):
     
     # Initialize tqdm progress bar
@@ -179,7 +196,7 @@ def train(generator, discriminator, adversarial_loss, optimizer_G, optimizer_D, 
         progress_bar.update(1)
 
     # Optionally, generate and save some example images after each epoch
-    if visualize:
+    if visualize and epoch+1 % 5 == 0:
         with torch.no_grad():
             sample_noise = torch.randn(16, latent_dim).to(device)
             generated_images = generator(sample_noise).detach().cpu()
@@ -192,7 +209,9 @@ if __name__ == '__main__':
     # Hyperparameters
     batch_size = 128  # Number of images in each batch
     latent_dim = 100  # Dimension of the latent noise vector
-    epochs = 10  # Number of training epochs
+    epochs = 100  # Number of training epochs
+
+    device = devicer()
 
     # Initialize generator and discriminator
     generator = Generator(latent_dim).to(device)
@@ -216,6 +235,8 @@ if __name__ == '__main__':
         for epoch in range(epochs):
             
             train(generator, discriminator, adversarial_loss,optimizer_G, optimizer_D, dataloader, latent_dim, epochs,epoch, batch_size, device, visualize=EPOCH_VISUALIZATION)
+            if epoch % 10 == 0:
+                save_checkpoint(generator, discriminator, optimizer_G, optimizer_D, epoch)
     
     if TEST:
         # generator = build_generator().to(device)  # Recreate the generator structure
