@@ -12,7 +12,7 @@ from tqdm import tqdm # For displaying progress bar
 import os
 
 TRAIN = True
-EPOCH_VISUALIZATION = True
+EPOCH_VISUALIZATION = False
 TEST = False
 LOAD_CHECKPOINT = False
 CHECKPOINT_PATH = 'checkpoint/checkpoint.pth'
