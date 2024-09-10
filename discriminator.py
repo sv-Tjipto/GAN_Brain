@@ -1,1 +1,0 @@
-# For defining the discriminator model.
