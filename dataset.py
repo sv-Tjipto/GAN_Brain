@@ -6,9 +6,9 @@ from torch.utils.data import DataLoader,Dataset
 import os
 from PIL import Image
 
-TRAIN_IMG = "/Volumes/sv_QuickFix/COMP3710/Assignment_2/GAN_Brain/Data_Brain/train"
-VAL_IMG = "/Volumes/sv_QuickFix/COMP3710/Assignment_2/GAN_Brain/Data_Brain/val"
-TEST_IMG = "/Volumes/sv_QuickFix/COMP3710/Assignment_2/GAN_Brain/Data_Brain/test"
+TRAIN_IMG = "/Volumes/sv_QuickFix/COMP3710/Assignment_2/GAN_Brain/Data_Brain/keras_png_slices_data/keras_png_slices_train"
+VAL_IMG = "/Volumes/sv_QuickFix/COMP3710/Assignment_2/GAN_Brain/Data_Brain/keras_png_slices_data/keras_png_slices_validate"
+TEST_IMG = "/Volumes/sv_QuickFix/COMP3710/Assignment_2/GAN_Brain/Data_Brain/keras_png_slices_data/keras_png_slices_test"
 
 
 class OASISDataset(Dataset):
@@ -20,7 +20,13 @@ class OASISDataset(Dataset):
 
     def __init__(self, image_dir_1,image_dir_2,image_dir_3, transform=None):
         # Combine the three image directories into one list
-        self.image_paths = sorted(os.listdir(image_dir_1)) + sorted(os.listdir(image_dir_2)) + sorted(os.listdir(image_dir_3))
+        # self.image_paths = sorted(os.listdir(image_dir_1)) + sorted(os.listdir(image_dir_2)) + sorted(os.listdir(image_dir_3))
+
+         # Get image paths and filter out hidden files or non-image files
+        self.image_paths = sorted([f for f in os.listdir(image_dir_1) if not f.startswith('._')]) + \
+                           sorted([f for f in os.listdir(image_dir_2) if not f.startswith('._')]) + \
+                           sorted([f for f in os.listdir(image_dir_3) if not f.startswith('._')])
+        
 
         self.image_dir_1 = image_dir_1
         self.image_dir_2 = image_dir_2
@@ -62,7 +68,7 @@ class OASISDataset(Dataset):
 
 def load_data(batch_size):
     transform = transforms.Compose([
-        transforms.Resize(128,128),
+        transforms.Resize((128,128)),
         transforms.ToTensor(),
         transforms.Normalize([0.5], [0.5])  # Normalize to [-1, 1]
     ])
