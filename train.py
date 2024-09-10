@@ -16,8 +16,17 @@ TEST = False
 LOAD_CHECKPOINT = False
 CHECKPOINT_PATH = 'checkpoint/checkpoint.pth'
 
-# Check if MPS is available, otherwise fallback to CPU
-device = torch.device("mps") if torch.backends.mps.is_available() else torch.device("cpu")
+def devicer():
+    # Prioritize CUDA, then MPS, and finally CPU
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+    elif torch.backends.mps.is_available():
+        device = torch.device("mps")
+    else:
+        device = torch.device("cpu")
+    
+    print(f'Using device: {device}', flush=True)
+    return device
 
 def generate_images(generator, num_images=20, noise_dim=100, device='mps'):
     generator.eval()  # Set the generator to evaluation mode
