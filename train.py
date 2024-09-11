@@ -11,9 +11,9 @@ from torchvision.utils import make_grid
 from tqdm import tqdm # For displaying progress bar
 import os
 
-TRAIN = True
+TRAIN = False
 EPOCH_VISUALIZATION = False
-TEST = False
+TEST = True
 LOAD_CHECKPOINT = False
 CHECKPOINT_PATH = 'checkpoint/checkpoint.pth'
 CHECKPOINT_DIR = 'checkpoints'
