@@ -15,7 +15,7 @@ TRAIN = False
 EPOCH_VISUALIZATION = False
 TEST = True
 LOAD_CHECKPOINT = False
-CHECKPOINT_PATH = 'checkpoint/checkpoint.pth'
+CHECKPOINT_PATH = 'checkpoints/gan_brain_checkpoint_epoch.pth'
 CHECKPOINT_DIR = 'checkpoints'
 
 def devicer():
@@ -33,15 +33,14 @@ def devicer():
 def generate_images(generator, num_images=20, noise_dim=100, device='mps'):
     generator.eval()  # Set the generator to evaluation mode
     
-    noise = torch.randn(num_images, noise_dim, device=device)
-    with torch.no_grad():  # Disable gradient calculations
-        fake_imgs = generator(noise)
-    
-    # Convert the generated images to a format for visualization
-    fake_imgs = fake_imgs.cpu().detach().numpy()
-    fake_imgs = (fake_imgs + 1) / 2  # Rescale images from [-1, 1] to [0, 1]
-    
-    return fake_imgs
+    sample_noise = torch.randn(num_images, noise_dim).to(device)
+    generated_images = generator(sample_noise).detach().cpu()
+    generated_images = (generated_images + 1) / 2  # Rescale to [0, 1] for visualization
+    grid = make_grid(generated_images, nrow=4)
+    plt.imshow(grid.permute(1, 2, 0), cmap="gray")
+    plt.show()
+
+
 
 def plot_images(images):
     num_images = len(images)
@@ -244,7 +243,7 @@ if __name__ == '__main__':
         generator.load_state_dict(checkpoint['generator_state_dict'])  # Load the saved model
 
         # Use the generator to create new images
-        fake_images = generate_images(generator, num_images=20, noise_dim=100, device=device)
+        generate_images(generator, num_images=16, noise_dim=100, device=device)
 
-        # Plot the images
-        plot_images(fake_images)
+        # # Plot the images
+        # plot_images(fake_images)
