@@ -1,2 +1,6 @@
 Data_Brain/
+
 __pycache__/
+GAN_test_err.txt
+GAN_test_out.txt
+
