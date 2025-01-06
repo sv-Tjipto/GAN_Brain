@@ -38,7 +38,9 @@ def generate_images(generator, num_images=20, noise_dim=100, device='mps'):
     generated_images = (generated_images + 1) / 2  # Rescale to [0, 1] for visualization
     grid = make_grid(generated_images, nrow=4)
     plt.imshow(grid.permute(1, 2, 0), cmap="gray")
-    plt.show()
+    plt.axis('off')
+    plt.savefig('Brain2.png')
+    # plt.show()
 
 
 
