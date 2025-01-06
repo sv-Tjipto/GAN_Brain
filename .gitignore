@@ -1,4 +1,9 @@
 Data_Brain/
+
 __pycache__/
+GAN_test_err.txt
+GAN_test_out.txt
+
+
 ._Brain2.png
 Brain2.png
