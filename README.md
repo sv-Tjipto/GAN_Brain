@@ -81,6 +81,14 @@ Netowrk is trained from scratch, no pre-trained model is used. To train the mode
 
 ## Conclusion
 
+Generative Adversarial Networks (GANs) are powerful tools capable of generating realistic data samples demonstrated with this project on the OASIS brain scan dataset. By training the model from scratch using UQ's Rangpur HPC cluster, it was able show the capabilities of GAN and produce visually convincing synthetic brain scans.
+
+While the generated outputs exhibit promising visual resemblance to the original dataset, challenges such as mode collapse, training instability, and hyperparameter tuning were observed, reflecting common hurdles in GAN training. Taking advantage of the resources available from HPC like the NVIDIA A100 GPU, it was able to significantly accelerate the training process and enabling the computationally demanding model to be train in a short duration.
+
+This project highlights the potential GANs in different fields like medical imaging, where synthetic data can support training deep learning models, augment datasets, and advance research. Future work on the project could focus on improving the model's output quality with clearer resolution. Other improves like implementing a more advance variant of GAN such as StyleGAN or Diffusion Models could be introduce. This project could be applicable to other disease classification or anomaly detection with future exploration.
+
+Overall, this project servers as a foundation into explore the applications of GANs in medical imaging and highlights the importance of leveraging HPC resources for large-scale machine learning projects.
+
 
 
 
