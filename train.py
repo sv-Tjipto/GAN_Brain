@@ -1,10 +1,8 @@
 # For the training loop and managing the training process.
-
 import torch
 import torch.nn as nn
 from dataset import load_data
 from gan import Generator, Discriminator
-# from gan import get_optimizers, create_noise
 import matplotlib.pyplot as plt
 import torch.optim as optim
 from torchvision.utils import make_grid
@@ -43,8 +41,6 @@ def generate_images(generator, num_images=20, noise_dim=100, device='mps'):
     plt.savefig('Brain2.png', bbox_inches='tight', pad_inches=0) # No padding around the saved images
     # plt.show()
 
-
-
 def plot_images(images):
     num_images = len(images)
     for i in range(num_images):
@@ -68,68 +64,6 @@ def load_checkpoint(checkpoint_path, generator, discriminator, gen_optimizer, di
 
     print(f"Checkpoint loaded from epoch {start_epoch}")
     return start_epoch
-
-
-# def train1(generator, discriminator, adversarial_loss,optimizer_G, optimizer_D, dataloader, latent_dim, epochs, epoch, batch_size):
-    
-    # Initialize tqdm progress bar
-    progress_bar = tqdm(dataloader, total=len(dataloader), desc=f"Epoch {epoch+1}/{epochs}")
-
-    for i, imgs in enumerate(dataloader):
-        real_imgs = imgs.to(device)
-        batch_size = real_imgs.size(0)
-        
-        # Labels for real (1) and fake (0) images
-        real = torch.ones(batch_size, 1).to(device)
-        fake = torch.zeros(batch_size, 1).to(device)
-
-        # -----------------
-        # Train Discriminator
-        # -----------------
-
-        # Sample noise as generator input
-        z = torch.randn(batch_size, latent_dim).to(device)
-
-        # Generate fake images
-        gen_imgs = generator(z)
-
-        # Loss for real and fake images
-        real_loss = adversarial_loss(discriminator(real_imgs), real)
-        fake_loss = adversarial_loss(discriminator(gen_imgs.detach()), fake)
-        d_loss = (real_loss + fake_loss) / 2
-
-        # Backprop and optimize discriminator
-        optimizer_D.zero_grad()
-        d_loss.backward()
-        optimizer_D.step()
-
-        # -----------------
-        # Train Generator
-        # -----------------
-
-        # Train the generator to fool the discriminator
-        g_loss = adversarial_loss(discriminator(gen_imgs), real)  # We want fake images to be classified as real
-
-        # Backprop and optimize generator
-        optimizer_G.zero_grad()
-        g_loss.backward()
-        optimizer_G.step()
-
-        # Print progress
-        # print(f"[Epoch {epoch}/{epochs}] [Batch {i}/{len(dataloader)}] [D loss: {d_loss.item()}] [G loss: {g_loss.item()}]")
-
-        # Update tqdm progress bar with losses
-        progress_bar.set_postfix(d_loss=d_loss.item(), g_loss=g_loss.item())
-
-    # Optionally, generate and save some example images after each epoch
-    if EPOCH_VISUALIZATION:
-        with torch.no_grad():
-            sample_noise = torch.randn(16, latent_dim).to(device)
-            generated_images = generator(sample_noise).detach().cpu()
-            generated_images = (generated_images + 1) / 2  # Rescale to [0, 1] for visualization
-            grid = make_grid(generated_images, nrow=4)
-            plt.imshow(grid.permute(1, 2, 0), cmap="gray")
-            plt.show()
 
 def save_checkpoint(generator, discriminator, gen_optimizer, disc_optimizer, epoch, checkpoint_dir=CHECKPOINT_DIR):
     if not os.path.exists(checkpoint_dir):
