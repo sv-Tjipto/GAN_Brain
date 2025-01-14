@@ -14,6 +14,7 @@ import os
 TRAIN = False
 EPOCH_VISUALIZATION = False
 TEST = True
+NUMBER_GEN_IMGS = 20 # Number of images to generate for testing
 LOAD_CHECKPOINT = False
 CHECKPOINT_PATH = 'checkpoints/gan_brain_checkpoint_epoch.pth'
 CHECKPOINT_DIR = 'checkpoints'
@@ -39,7 +40,7 @@ def generate_images(generator, num_images=20, noise_dim=100, device='mps'):
     grid = make_grid(generated_images, nrow=4)
     plt.imshow(grid.permute(1, 2, 0), cmap="gray")
     plt.axis('off')
-    plt.savefig('Brain2.png')
+    plt.savefig('Brain2.png', bbox_inches='tight', pad_inches=0) # No padding around the saved images
     # plt.show()
 
 
@@ -245,7 +246,7 @@ if __name__ == '__main__':
         generator.load_state_dict(checkpoint['generator_state_dict'])  # Load the saved model
 
         # Use the generator to create new images
-        generate_images(generator, num_images=16, noise_dim=100, device=device)
+        generate_images(generator, num_images=NUMBER_GEN_IMGS, noise_dim=100, device=device)
 
         # # Plot the images
         # plot_images(fake_images)
