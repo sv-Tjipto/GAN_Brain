@@ -6,6 +6,20 @@ This Generative Adversarial Network's (GANs) application is to generate realisti
 
 The preprocessed OASIS dataset was given, examples are attached below.
 
+<p align="center">
+  <img src="assets/example_1.png" width="30%" />
+  <img src="assets/example_2.png" width="30%" />
+  <img src="assets/example_3.png" width="30%" />
+</p>
+
+Below are some examples of the GAN on the dataset:
+
+<p align="center">
+  <img src="assets/gen_example_1.png" width="30%" />
+  <img src="assets/gen_example_2.png" width="30%" />
+  <img src="assets/gen_example_3.png" width="30%" />
+</p>
+
 ## Table of Contents
 
 - [Generative Adversarial Networks on OASIS dataset](#generative-adversarial-networks-on-oasis-dataset)
@@ -13,8 +27,10 @@ The preprocessed OASIS dataset was given, examples are attached below.
   - [Table of Contents](#table-of-contents)
   - [File Structure](#file-structure)
   - [Installation](#installation)
+  - [Requirements](#requirements)
   - [Usage](#usage)
   - [Contributing](#contributing)
+  - [Conclusion](#conclusion)
   - [License](#license)
 
 ## File Structure
@@ -22,8 +38,8 @@ The preprocessed OASIS dataset was given, examples are attached below.
 Folder contains the following files:
 
   - `train.py`: Main file to train the model.
-  - 'gan.py': Contains the GAN model.
-  - 'dataset.py': Contains the dataset class.
+  - `gan.py`: Contains the GAN model.
+  - `dataset.py`: Contains the dataset class.
 
 
 
@@ -61,6 +77,12 @@ Netowrk is trained from scratch, no pre-trained model is used. To train the mode
 ```
 
 ## Contributing
+
+
+## Conclusion
+
+
+
 
 ## License
 
