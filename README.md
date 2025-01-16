@@ -31,6 +31,7 @@ Below are some examples of the GAN on the dataset:
   - [Usage](#usage)
   - [Contributing](#contributing)
   - [Conclusion](#conclusion)
+  - [Future Improvements](#future-improvements)
   - [License](#license)
 
 ## File Structure
@@ -70,7 +71,7 @@ Folder contains the following files:
 
 Note: The following commands are to be run on the Rangpur HPC Cluster but can be modified to run on any other HPC Cluster. or local machine.
 
-Netowrk is trained from scratch, no pre-trained model is used. To train the model, run the following command:
+The Network is trained from scratch, no pre-trained model is used. To train the model, run the following command:
 
 ```
 > python train.py
@@ -90,7 +91,12 @@ This project highlights the potential GANs in different fields like medical imag
 Overall, this project servers as a foundation into explore the applications of GANs in medical imaging and highlights the importance of leveraging HPC resources for large-scale machine learning projects.
 
 
+## Future Improvements
 
+1. Enhancing Output quality 
+2. Adding Loss Plot to help evaluate the training stability and convergence.
+3. Hyperparameter Optimization
+4. Improving model stability
 
 ## License
 
