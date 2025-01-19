@@ -41,7 +41,7 @@ Folder contains the following files:
   - `train.py`: Main file to train the model.
   - `gan.py`: Contains the GAN model.
   - `dataset.py`: Contains the dataset class.
-
+  - `GANG_Brain.sh`:  Command to run code on UQ's HPC Rangpur
 
 
 ## Installation
@@ -69,7 +69,14 @@ Folder contains the following files:
 
 ## Usage
 
-Note: The following commands are to be run on the Rangpur HPC Cluster but can be modified to run on any other HPC Cluster. or local machine.
+Note: To run the model on Rangpur HPC Cluster, use the Bash file in the Repo
+and submit it as a job in the terminal logged into the cluster. Command as follows:
+
+```
+> sbatch GANG_Brain.sh
+```
+
+Note: The following commands are to be run on your local machine.
 
 The Network is trained from scratch, no pre-trained model is used. To train the model, run the following command:
 
@@ -77,8 +84,17 @@ The Network is trained from scratch, no pre-trained model is used. To train the 
 > python train.py
 ```
 
+Change Global variables in `train.py` appropriately for test, training, training from last checkpoint, checkpoint path and Dataset path.
+
 ## Contributing
 
+Reporting Issues
+
+If you encounter any bugs or have suggestions, please open an issue. Provide as much detail as possible, including:
+	•	Steps to reproduce the issue.
+	•	Expected and actual behavior.
+	•	Screenshots or error messages (if applicable).
+  
 
 ## Conclusion
 
